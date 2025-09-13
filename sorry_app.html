@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I'm Sorry ❤️</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      flex-direction: column;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      position: relative;
+      z-index: 2;
+      max-width: 400px;
+    }
+    h1 {
+      font-size: 2.5rem;
+      color: #e63946;
+    }
+    p {
+      font-size: 1.2rem;
+      color: #333;
+      margin: 15px 0 20px;
+    }
+    button {
+      background: #e63946;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 30px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #d62828;
+      transform: scale(1.05);
+    }
+    .slideshow {
+      margin-top: 20px;
+      max-width: 100%;
+      height: auto;
+      text-align: center;
+      position: relative;
+    }
+    .slideshow img {
+      width: 100%;
+      height: auto;
+      max-height: 300px; /* keeps tall images from being too big */
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: auto;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .slideshow img.active {
+      opacity: 1;
+      position: relative;
+    }
+    .heart {
+      position: absolute;
+      color: #e63946;
+      font-size: 20px;
+      animation: float 5s linear infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>I'm Sorry ❤️</h1>
+    <p>I didn’t mean to upset you. Please forgive me 🙏</p>
+    <button id="forgiveBtn">Forgive Me?</button>
+
+    <div class="slideshow" style="display:none;">
+      <img src="pic1.jpg" class="active" alt="Us 1">
+      <img src="pic2.jpg" alt="Us 2">
+      <img src="pic3.jpg" alt="Us 3">
+    </div>
+  </div>
+
+  <!-- Background Music -->
+  <audio id="bgMusic" loop>
+    <source src="song.mp3" type="audio/mpeg">
+    Your browser does not support the audio tag.
+  </audio>
+
+  <script>
+    const forgiveBtn = document.getElementById('forgiveBtn');
+    const slideshow = document.querySelector('.slideshow');
+    const music = document.getElementById('bgMusic');
+    let slideshowStarted = false;
+
+    forgiveBtn.addEventListener('click', () => {
+      music.play();
+      slideshow.style.display = 'block';
+
+      // Change button text after forgiveness
+      forgiveBtn.textContent = "You're the best ❤️";
+      forgiveBtn.disabled = true;
+      forgiveBtn.style.background = '#6a994e';
+
+      // Start floating hearts
+      setInterval(createHeart, 300);
+
+      // Start slideshow
+      if (!slideshowStarted) {
+        const slides = document.querySelectorAll('.slideshow img');
+        let current = 0;
+        setInterval(() => {
+          slides[current].classList.remove('active');
+          current = (current + 1) % slides.length;
+          slides[current].classList.add('active');
+        }, 3000);
+        slideshowStarted = true;
+      }
+    });
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.textContent = '❤️';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+      heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }
+  </script>
+</body>
+</html>
